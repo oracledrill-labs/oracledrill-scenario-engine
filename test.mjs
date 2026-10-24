@@ -7,3 +7,5 @@ test('required reference enforced',()=>assert.equal(evaluate(sample.scenarios[0]
 test('checked i128 arithmetic',()=>assert.equal(evaluate({...sample.scenarios[0].report,answer:((1n<<127n)-1n).toString()},policy,sample.scenarios[0].report,'1800000000').code,'ARITHMETIC'));
 test('invalid policy rejected',()=>assert.throws(()=>run({...sample,policy:{...policy,max_age:0}})));
 test('over-limit corpus rejected',()=>assert.throws(()=>run({...sample,scenarios:Array(101).fill(sample.scenarios[0])})));
+
+test('malformed scalar reference is not treated as absent',()=>assert.equal(evaluate(sample.scenarios[0].report,policy,false,'1800000000').code,'MALFORMED'));
